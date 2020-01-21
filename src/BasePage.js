@@ -1,16 +1,17 @@
 import React from "react";
-import { Menu, Container, Button, Sidebar, Icon } from "semantic-ui-react";
+import { Menu, Container, Button, Sidebar, Icon, Modal, Header } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-import { HashRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import MainRouter from "./routes/Router";
 import { createStore, connect } from "nycticorax";
-import { UserData } from "./common/types.ts";
+import {getAppName} from "./utils/utils";
 createStore({
     base: {
         uid: -1,
         username: "",
-        isLogin: "",
-        managable: false
+        isLogin: false,
+        managable: false,
+
     }
 })
 class BasePage extends React.Component {
@@ -22,7 +23,7 @@ class BasePage extends React.Component {
     logout() {
 
     }
-    componentWillMount() {
+    componentDidMount() {
         this.setState({
             base: this.props.base
         });
@@ -89,6 +90,13 @@ class BasePage extends React.Component {
                                             <Icon name="code line"></Icon>
                                             在线IDE
                                         </Menu.Item>
+                                        <Menu.Item as={Link} to={"/profile_edit/" + this.state.base.uid}>
+                                            <Icon name="address card"></Icon>
+                                            个人信息编辑
+                                        </Menu.Item>
+                                        {this.state.base.managable && <Menu.Item as={Link} to="/admin" >
+                                            <Icon name="sitemap"></Icon>后台管理
+                                            </Menu.Item>}
                                         <Menu.Item as="a" onClick={this.logout}>
                                             <Icon name="x"></Icon>
                                             登出
@@ -134,9 +142,15 @@ class BasePage extends React.Component {
                         }}>
                             {/* <Route path="/" component={HomePage}></Route> */}
                             <MainRouter></MainRouter>
+                            <Container className="center aligned" >
+                                <div style={{ color: "darkgrey" }}>
+                                    {getAppName()} Powered by <a href="https://gitee.com/yutong_java/HelloJudge2"> HelloJudge2 </a>
+                                </div>
+                            </Container>
                         </Container>
                     </Sidebar.Pusher>
                 </Sidebar.Pushable>
+
             </Router>
         );
     }
