@@ -1,10 +1,11 @@
 import React from "react";
 import { connect } from "nycticorax";
 import axios from "axios";
-import { Button, Container, Divider, Grid, Segment, Header, Table } from "semantic-ui-react";
+import { List, Container, Divider, Grid, Segment, Header, Table } from "semantic-ui-react";
 import MessageBox from "./utils/Modal";
 import { getAppName, renderMarkdown } from "../utils/utils";
 import { Link } from "react-router-dom";
+// import _ from "lodash";
 class HomePage extends React.Component {
     state = {
         data: null,
@@ -105,6 +106,73 @@ class HomePage extends React.Component {
                                         <Link to="/ranklist/1">查看全部</Link>
                                     </Container>
                                 </Segment>
+                            </Grid.Column>
+                            <Grid.Column width="5">
+                                <Header>
+                                    <h2>Hitokoto</h2>
+                                </Header>
+                                {this.state.hitokoto && <Segment stacked>
+                                    <Container textAlign="center" style={{ fontSize: "15px", minHeight: "50px" }}>{this.state.hitokoto.hitokoto}</Container>
+                                    <Container textAlign="right" style={{ textAlign: "right" }}>{this.state.hitokoto.from}</Container>
+                                    <Container textAlign="right" style={{ textAlign: "right" }}>
+                                        <a href={"https://hitokoto.cn?id=" + this.state.hitokoto.id}>{this.state.hitokoto.id}</a>
+                                    </Container>
+                                </Segment>}
+                                <Header>
+                                    <h2>近期题目</h2>
+                                </Header>
+                                <Segment stacked>
+                                    <Table basic="very" celled>
+                                        <Table.Header>
+                                            <Table.Row>
+                                                <Table.HeaderCell textAlign="center">题目名</Table.HeaderCell>
+                                                <Table.HeaderCell textAlign="center">时间</Table.HeaderCell>
+                                            </Table.Row>
+                                        </Table.Header>
+                                        <Table.Body>
+                                            {
+                                                this.state.data.recent_problems.map(curr => <Table.Row key={curr.id}>
+                                                    <Table.Cell textAlign="center">
+                                                        <Link to={"/show_problem/" + curr.id}>{curr.title}</Link>
+                                                    </Table.Cell>
+                                                    <Table.Cell textAlign="center">{curr.create_time}</Table.Cell>
+                                                </Table.Row>)
+                                            }
+                                        </Table.Body>
+                                    </Table>
+                                </Segment>
+                                <Header>
+                                    <h2>近期讨论</h2>
+                                </Header>
+                                <Segment stacked>
+                                    <Table basic="very" celled>
+                                        <Table.Header>
+                                            <Table.Row>
+                                                <Table.HeaderCell textAlign="center">标题</Table.HeaderCell>
+                                                <Table.HeaderCell textAlign="center">时间</Table.HeaderCell>
+                                            </Table.Row>
+                                        </Table.Header>
+                                        <Table.Body>
+                                            {
+                                                this.state.data.discussions.map(curr => <Table.Row key={curr.id}>
+                                                    <Table.Cell textAlign="center">
+                                                        <Link to={"/show_discussion/" + curr.id}>{curr.title}</Link>
+                                                    </Table.Cell>
+                                                    <Table.Cell textAlign="center">{curr.time}</Table.Cell>
+                                                </Table.Row>)
+                                            }
+                                        </Table.Body>
+                                    </Table>
+                                </Segment>
+                                <Header>
+                                    <h2>友情链接</h2>
+                                </Header>
+                                <Segment stacked>
+                                    <List>
+                                        {this.state.data.friend_links.map((item, i) => <List.Item key={i} as="a" href={item.url}>{item.name}</List.Item>)}
+                                    </List>
+                                </Segment>
+
                             </Grid.Column>
                         </Grid.Row>
                     </Grid>

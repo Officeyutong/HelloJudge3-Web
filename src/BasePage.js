@@ -1,10 +1,10 @@
 import React from "react";
-import { Menu, Container, Button, Sidebar, Icon, Modal, Header } from "semantic-ui-react";
+import { Menu, Container, Button, Sidebar, Icon} from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { BrowserRouter as Router } from "react-router-dom";
 import MainRouter from "./routes/Router";
 import { createStore, connect } from "nycticorax";
-import {getAppName} from "./utils/utils";
+import { getAppName } from "./utils/utils";
 createStore({
     base: {
         uid: -1,
@@ -142,7 +142,7 @@ class BasePage extends React.Component {
                         }}>
                             {/* <Route path="/" component={HomePage}></Route> */}
                             <MainRouter></MainRouter>
-                            <Container className="center aligned" >
+                            <Container className="center aligned" style={{ paddingTop: "20px" }} >
                                 <div style={{ color: "darkgrey" }}>
                                     {getAppName()} Powered by <a href="https://gitee.com/yutong_java/HelloJudge2"> HelloJudge2 </a>
                                 </div>
