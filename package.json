@@ -45,5 +45,8 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@types/md5": "^2.1.33",
+    "@types/qs": "^6.9.0"
+  }
 }

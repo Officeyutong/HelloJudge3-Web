@@ -1,16 +1,24 @@
 import React from "react";
-import { Menu, Container, Button, Sidebar, Icon} from "semantic-ui-react";
+import { Menu, Container, Button, Sidebar, Icon } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { BrowserRouter as Router } from "react-router-dom";
 import MainRouter from "./routes/Router";
 import { createStore, connect } from "nycticorax";
 import { getAppName } from "./utils/utils";
+import axios from "axios";
+import UserProfileImage from "./views/utils/UserProfilePhoto";
 createStore({
     base: {
         uid: -1,
         username: "",
         isLogin: false,
         managable: false,
+        salt: "",
+        appName: "",
+        judgeStatus: {
+
+        },
+        setTitle: null
 
     }
 })
@@ -18,14 +26,41 @@ class BasePage extends React.Component {
     state = {
         showingSidebar: false,
         showDiscussionLinks: false,
-        base: {}
     };
     logout() {
-
+        axios.post("/post/logout").then(resp => {
+            window.location.reload();
+        });
     }
     componentDidMount() {
-        this.setState({
-            base: this.props.base
+        axios.post("/api/this_should_be_the_first_request").then(resp => {
+            let data = resp.data;
+            
+            if (data.result) {
+                this.props.dispatch({
+                    base: {
+                        ...this.props.base,
+                        uid: data.uid,
+                        username: data.username,
+                        isLogin: true,
+                        managable: data.backend_managable,
+                        email: data.email,
+                        salt: data.salt,
+                        judgeStatus: data.judgeStatus,
+                        appName: data.appName,
+                    }
+                });
+            } else {
+                this.props.dispatch({
+                    base: {
+                        ...this.props.base,
+                        salt: data.salt,
+                        judgeStatus: data.judgeStatus,
+                        appName: data.appName,
+                    }
+                })
+            }
+            console.log("dispatched..");
         });
     }
     render() {
@@ -84,19 +119,29 @@ class BasePage extends React.Component {
                         </Menu.Item>
                         {
                             (() => {
-                                if (this.state.base.isLogin) {
+                                if (this.props.base.isLogin) {
                                     return <>
                                         <Menu.Item as={Link} to="/ide" >
-                                            <Icon name="code line"></Icon>
+                                            <Icon name="code"></Icon>
                                             在线IDE
                                         </Menu.Item>
-                                        <Menu.Item as={Link} to={"/profile_edit/" + this.state.base.uid}>
+                                        <Menu.Item as={Link} to="/help">
+                                            <Icon name="help circle"></Icon>
+                                            帮助
+                                        </Menu.Item>
+                                        <Menu.Item as={Link} to={"/profile_edit/" + this.props.base.uid}>
                                             <Icon name="address card"></Icon>
                                             个人信息编辑
                                         </Menu.Item>
-                                        {this.state.base.managable && <Menu.Item as={Link} to="/admin" >
+                                        {this.props.base.managable && <Menu.Item as={Link} to="/admin" >
                                             <Icon name="sitemap"></Icon>后台管理
                                             </Menu.Item>}
+                                        {
+                                            this.props.base.isLogin && <Menu.Item as={Link} to={"/profile/" + this.props.base.uid}>
+                                                <UserProfileImage email={this.props.base.email} />
+                                                <span>{this.props.base.username}</span>
+                                            </Menu.Item>
+                                        }
                                         <Menu.Item as="a" onClick={this.logout}>
                                             <Icon name="x"></Icon>
                                             登出

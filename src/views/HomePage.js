@@ -18,13 +18,19 @@ class HomePage extends React.Component {
     componentWillUnmount() {
         this.source.cancel();
     }
+    componentWillReceiveProps(props) {
+        document.title = "主页 - " + props.base.appName;
+    }
     componentDidMount() {
-        this.setState({
-            base: this.props.base
-        });
+        // this.setState({
+        //     base: this.props.base
+        // });
+        // this.props.base.setTitle("主页");
+
+
         axios.post("/api/home_page", { cancelToken: this.source.token }).then(resp => {
             let data = resp.data;
-            console.log(data);
+            // console.log(data);
             if (data.code) {
                 MessageBox.show(data.message);
                 return;
@@ -34,7 +40,7 @@ class HomePage extends React.Component {
                 done: true
             });
         });
-        axios.get("https://v1.hitokoto.cn/", { cancelToken: this.source.token }).then(hitokoto => {
+        axios.get("https://v1.hitokoto.cn/", { cancelToken: this.source.token, withCredentials: false }).then(hitokoto => {
             this.setState({ hitokoto: hitokoto.data });
         });
     }
