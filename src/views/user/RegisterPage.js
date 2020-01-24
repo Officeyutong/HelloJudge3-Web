@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "nycticorax";
 import { Container, Header, Segment, Dimmer, Loader, Form, Button, Message } from "semantic-ui-react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import qs from 'qs';
 import axios from "axios";
 import md5 from "md5";

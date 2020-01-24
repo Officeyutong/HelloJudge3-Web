@@ -28,14 +28,14 @@ class BasePage extends React.Component {
         showDiscussionLinks: false,
     };
     logout() {
-        axios.post("/post/logout").then(resp => {
+        axios.post("/api/logout").then(resp => {
             window.location.reload();
         });
     }
     componentDidMount() {
         axios.post("/api/this_should_be_the_first_request").then(resp => {
             let data = resp.data;
-            
+
             if (data.result) {
                 this.props.dispatch({
                     base: {
@@ -166,7 +166,8 @@ class BasePage extends React.Component {
 
                     <Sidebar.Pusher dimmed={this.state.showingSidebar} onClick={() => this.state.showingSidebar && this.setState({ showingSidebar: false })} style={{
                         height: "100%",
-                        width: "100%"
+                        width: "100%",
+                        overflowY: "scroll"
                     }}>
                         <div style={{
                             marginTop: "50px",

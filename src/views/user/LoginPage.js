@@ -1,5 +1,5 @@
 import React from "react";
-import { connect, subscribe } from "nycticorax";
+import { connect } from "nycticorax";
 import { Container, Header, Segment, Dimmer, Loader, Form, Button, Message } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import qs from 'qs';
@@ -52,7 +52,7 @@ class LoginPage extends React.Component {
         axios.post("/api/require_reset_password", qs.stringify({
             identifier: this.state.identifier
         }), { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).then(resp => {
-            let data = resp.data.data;
+            let data = resp.data;
             this.setState({ loading: false });
             if (data.code) {
                 this.setState({ errorMessage: data.message });
@@ -89,6 +89,8 @@ class LoginPage extends React.Component {
                         <Message success header="成功" content={this.state.successMessage} />
                         <Button onClick={() => this.login()} color="green">提交</Button>
                         <Link to="/register">注册</Link>
+                        {// eslint-disable-next-line 
+                        }
                         <a onClick={() => this.resetPassword()}>  重置密码</a>
                     </Form>
                 </Segment>
