@@ -8,7 +8,7 @@ import ProfileEditPage from "../views/user/ProfileEditPage";
 import EmailAuthPage from "../views/user/EmailAuthPage";
 import ResetPasswordPage from "../views/user/ResetPasswordPage";
 import ProblemsPage from "../views/problem/ProblemsPage";
-import ShowProblemPage from "../views/problem/ShowProblem";
+import ShowProblemPage from "../views/problem/ShowProblemPage";
 import _404 from "../views/_404";
 function router() {
     return (
