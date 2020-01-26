@@ -26,6 +26,7 @@ class BasePage extends React.Component {
     state = {
         showingSidebar: false,
         showDiscussionLinks: false,
+        done: false
     };
     logout() {
         axios.post("/api/logout").then(resp => {
@@ -49,7 +50,7 @@ class BasePage extends React.Component {
                         judgeStatus: data.judgeStatus,
                         appName: data.appName,
                     }
-                });
+                }, true);
             } else {
                 this.props.dispatch({
                     base: {
@@ -58,12 +59,14 @@ class BasePage extends React.Component {
                         judgeStatus: data.judgeStatus,
                         appName: data.appName,
                     }
-                })
+                }, true)
             }
+            this.setState({ done: true });
             console.log("dispatched..");
         });
     }
     render() {
+        if (!this.state.done) return null;
         return (
             <Router>
                 <Sidebar.Pushable>

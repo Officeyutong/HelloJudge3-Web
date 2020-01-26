@@ -7,6 +7,8 @@ import ProfilePage from "../views/user/ProfilePage";
 import ProfileEditPage from "../views/user/ProfileEditPage";
 import EmailAuthPage from "../views/user/EmailAuthPage";
 import ResetPasswordPage from "../views/user/ResetPasswordPage";
+import ProblemsPage from "../views/problem/ProblemsPage";
+import ShowProblemPage from "../views/problem/ShowProblem";
 import _404 from "../views/_404";
 function router() {
     return (
@@ -19,6 +21,12 @@ function router() {
                 <Route path="/profile_edit/:uid" exact component={ProfileEditPage} />
                 <Route path="/auth_email/:token" exact component={EmailAuthPage} />
                 <Route path="/reset_password/:token" exact component={ResetPasswordPage} />
+                <Route path="/problems/:page" exact component={ProblemsPage} />
+                <Route path="/problems/:page" exact component={ProblemsPage} />
+                <Route path="/problems/:page" exact component={ProblemsPage} />
+                <Route path="/show_problem/:problemID" exact component={ShowProblemPage} />
+                <Route path="/show_problem/:problemID" exact component={ShowProblemPage} />
+                <Route path="/contest/:contestID/problem/:problemID" exact component={ShowProblemPage} />
                 
                 <Route component={_404}></Route>
             </Switch>
