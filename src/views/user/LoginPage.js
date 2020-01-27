@@ -91,7 +91,7 @@ class LoginPage extends React.Component {
                         <Link to="/register">注册</Link>
                         {// eslint-disable-next-line 
                         }
-                        <a onClick={() => this.resetPassword()}>  重置密码</a>
+                        <Link onClick={() => this.resetPassword()}>  重置密码</Link>
                     </Form>
                 </Segment>
             </Container>

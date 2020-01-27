@@ -1,20 +1,27 @@
 import showdown from "showdown";
-import showdownKatex from "showdown-katex";
-
+import katex from "katex";
 const converter = new showdown.Converter(
     {
         extensions: [
-            showdownKatex(
-                {
-                    throwOnError: false, // allows katex to fail silently
-                    errorColor: '#ff0000',
-                    delimiters: [
-                        { left: "$$", right: "$$", display: true }, // katex default
-                        { left: '$', right: '$', display: false },
-                    ],
+            {
+                type: 'output', regex: /\$\$([\S\s]+?)\$\$/g, replace: (x, y) => {
+                    let result = katex.renderToString(y, {
+                        throwOnError: false,
+                        displayMode: true
+                    });
+                    return result;
                 }
-            )
-        ]
+            },
+            {
+                type: 'output', regex: /\$([\S\s]+?)\$/g, replace: (x, y) => {
+                    let result = katex.renderToString(y, {
+                        throwOnError: false,
+                        displayMode: false
+                    });
+                    return result;
+                }
+            }
+        ], tables: true, literalMidWordUnderscores: true
     }
 );
 const getAppName = () => {
@@ -24,5 +31,12 @@ const getAppName = () => {
 const renderMarkdown = (text) => {
     return converter.makeHtml(text);
 };
-
-export { getAppName, renderMarkdown };
+const copyText = text => {
+    const element = document.createElement("textarea");
+    document.body.appendChild(element);
+    element.value = text;
+    element.select();
+    document.execCommand("copy");
+    document.body.removeChild(element);
+};
+export { getAppName, renderMarkdown, copyText };

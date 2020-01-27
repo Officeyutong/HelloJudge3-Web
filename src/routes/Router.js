@@ -25,7 +25,6 @@ function router() {
                 <Route path="/problems/:page" exact component={ProblemsPage} />
                 <Route path="/problems/:page" exact component={ProblemsPage} />
                 <Route path="/show_problem/:problemID" exact component={ShowProblemPage} />
-                <Route path="/show_problem/:problemID" exact component={ShowProblemPage} />
                 <Route path="/contest/:contestID/problem/:problemID" exact component={ShowProblemPage} />
                 
                 <Route component={_404}></Route>

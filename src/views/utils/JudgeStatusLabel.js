@@ -17,7 +17,7 @@ function JudgeStatusLabel({ base, status }) {
     // console.log(base.judgeStatus);
     // console.log(getIcon(status));
     return <Label color={getColor(status)}  >
-        <Icon name={getIcon(status)}></Icon>
+        <Icon name={getIcon(status).replace("loading", "").trim()} loading={getIcon().includes("loading")}></Icon>
         {getText(status)}
     </Label>
 }

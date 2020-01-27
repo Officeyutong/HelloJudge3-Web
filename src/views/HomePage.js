@@ -18,9 +18,7 @@ class HomePage extends React.Component {
     componentWillUnmount() {
         this.source.cancel();
     }
-    componentWillReceiveProps(props) {
-        document.title = "主页 - " + props.base.appName;
-    }
+
     componentDidMount() {
         // this.setState({
         //     base: this.props.base
@@ -35,6 +33,7 @@ class HomePage extends React.Component {
                 MessageBox.show(data.message);
                 return;
             }
+            document.title = "主页 - " + this.props.base.appName;
             this.setState({
                 data: data.data,
                 done: true
@@ -101,7 +100,7 @@ class HomePage extends React.Component {
                                                         overflowX: "hidden",
                                                         maxWidth: "700px"
                                                     }}>
-                                                        <div dangerouslySetInnerHTML={{ __html: renderMarkdown(curr.description) }} ></div>
+                                                        <div dangerouslySetInnerHTML={{ __html: renderMarkdown(curr.description) }} />
                                                     </Table.Cell>
                                                     <Table.Cell textAlign="center">{curr.rating}</Table.Cell>
                                                 </Table.Row>)

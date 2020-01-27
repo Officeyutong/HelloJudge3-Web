@@ -74,7 +74,7 @@ function ProblemsPage({ base, match, location, history }) {
                 }
             });
         }
-    });
+    }, [loaded, base.appName, searchKeyword, match.params.page]);
     if (!done) return null;
     else {
         return <>
