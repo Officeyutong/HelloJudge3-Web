@@ -1,3 +1,5 @@
+**此项目已作废，目前暂无HJ3开发计划。**
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
